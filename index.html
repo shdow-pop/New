@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تسجيل حساب</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      width: 320px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-box button:hover {
+      background-color: #0056b3;
+    }
+
+    .success, .error {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2>تسجيل حساب</h2>
+    <form id="signup-form">
+      <input type="text" id="name" placeholder="الاسم الكامل" required />
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <button type="submit">تسجيل</button>
+    </form>
+    <div class="success" id="success-message"></div>
+    <div class="error" id="error-message"></div>
+  </div>
+
+  <script>
+    emailjs.init("lWw2gKUVTBg4YtukfAQ_1");
+
+    document.getElementById("signup-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      emailjs.send("service_i03b81g", "OUzdp9GCPTEHnHt82", {
+        name: name,
+        email: email,
+        password: password
+      })
+      .then(function(response) {
+        document.getElementById("success-message").textContent = "تم الإرسال بنجاح!";
+        document.getElementById("error-message").textContent = "";
+      }, function(error) {
+        document.getElementById("error-message").textContent = "فشل الإرسال!";
+        document.getElementById("success-message").textContent = "";
+      });
+    });
+  </script>
+</body>
+      </html>
